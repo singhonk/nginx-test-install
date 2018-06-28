@@ -1,10 +1,13 @@
 ---
 - hosts: all
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
   tasks:
     - name: Installs nginx web server
       apt: pkg=nginx state=installed update_cache=true
       notify:
-        - start nginx
+        - start nginx        
 
     - name: Upload default index.php for host
       copy: src=static_files/index.php dest=/usr/share/nginx/www/ mode=0644
